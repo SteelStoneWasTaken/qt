@@ -1,16 +1,19 @@
 use qt_widgets::{qt_core::*, QPushButton};
-//use qt_widgets::qt_core::*;
 use qt_widgets::*;
-use cpp_core::CppBox;
 
-pub fn str(input: &str) -> CppBox<QString> {
-    QString::from_std_str(input) // Yep, just because it's ugly.
+#[macro_export]
+macro_rules! Qstr {
+    ($input:expr) => {{
+        QString::from_std_str($input)
+    }};
 }
 
-pub fn bind_fn<F>(window: &QBox<QWidget>, target: &QBox<QPushButton>, func: F) where F: Fn() + 'static,
+pub fn bind_button<F>(window: &QBox<QWidget>, target: &QBox<QPushButton>, func: F) where F: Fn() + 'static,
 {
     unsafe {
         let slot = SlotNoArgs::new(window, func);
         target.clicked().connect(&slot);
     }
 }
+
+

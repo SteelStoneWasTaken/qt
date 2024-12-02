@@ -7,9 +7,9 @@ macro_rules! build {
         let layout = QVBoxLayout::new_0a();
 
         let button = QPushButton::new();
-        button.set_text(&qt::str("Click Here!"));
+        button.set_text(&Qstr!("Click Here!"));
 
-        qt::bind_fn(&$window, &button, move || {
+        qt::bind_button(&$window, &button, move || {
             let mut a = a.borrow_mut();
             *a += 1;
 
