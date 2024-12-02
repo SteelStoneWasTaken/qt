@@ -1,5 +1,4 @@
-use qt_widgets::{qt_core::*, QPushButton};
-use qt_widgets::*;
+
 
 #[macro_export]
 macro_rules! Qstr {
@@ -8,12 +7,15 @@ macro_rules! Qstr {
     }};
 }
 
-pub fn bind_button<F>(window: &QBox<QWidget>, target: &QBox<QPushButton>, func: F) where F: Fn() + 'static,
-{
-    unsafe {
-        let slot = SlotNoArgs::new(window, func);
-        target.clicked().connect(&slot);
-    }
+#[macro_export]
+macro_rules! QBindButton {
+    ($window:expr, $button:expr, $($input:tt)*) => {{
+        let slot = SlotNoArgs::new($window, move || {
+            $($input)*
+        });
+        $button.clicked().connect(&slot);
+    }};
 }
+
 
 

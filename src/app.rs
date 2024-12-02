@@ -9,10 +9,9 @@ macro_rules! build {
         let button = QPushButton::new();
         button.set_text(&Qstr!("Click Here!"));
 
-        qt::bind_button(&$window, &button, move || {
+        QBindButton!(&$window, &button, {
             let mut a = a.borrow_mut();
             *a += 1;
-
             println!("{}", *a);
         });
 
