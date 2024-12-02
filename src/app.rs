@@ -2,7 +2,8 @@
 macro_rules! build {
     ($window:expr) => {{ ///////////////////////////
         
-        let a = Rc::clone(&Rc::new(RefCell::new(0)));
+        let a = push!(0);
+        let b = push!("World");
         
         let layout = QVBoxLayout::new_0a();
 
@@ -10,9 +11,10 @@ macro_rules! build {
         button.set_text(&Qstr!("Click Here!"));
 
         QBindButton!(&$window, &button, {
-            let mut a = a.borrow_mut();
+            let mut a = pull!(a);
+            let b = pull!(b);
             *a += 1;
-            println!("{}", *a);
+            println!("Hello, {}! ({})", *b, *a);
         });
 
         layout.add_widget(button.as_mut_raw_ptr());

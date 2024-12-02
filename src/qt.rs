@@ -1,5 +1,3 @@
-
-
 #[macro_export]
 macro_rules! Qstr {
     ($input:expr) => {{
@@ -17,5 +15,18 @@ macro_rules! QBindButton {
     }};
 }
 
+#[macro_export]
+macro_rules! push {
+    ($input:expr) => {{
+        let a = Rc::new(RefCell::new($input));
+        a
+    }};
+}
 
-
+#[macro_export]
+macro_rules! pull {
+    ($a:expr) => {{
+        let a = $a.borrow_mut();
+        a
+    }};
+}
